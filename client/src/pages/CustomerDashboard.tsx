@@ -44,6 +44,7 @@ export const CustomerDashboard: React.FC = () => {
   const [payingBookingId, setPayingBookingId] = useState<string | null>(null);
 
   const fetchBookings = async () => {
+    if (!currentUser) return;
     try {
       const res = await apiRequest<Booking[]>('/bookings', {}, currentUser.id);
       if (res.success) {
@@ -56,10 +57,11 @@ export const CustomerDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchBookings();
-  }, [currentUser.id]);
+  }, [currentUser?.id]);
 
   // Handle Payment (Razorpay Test or Demo Mode)
   const handlePay = async (booking: Booking, isDemo: boolean = true) => {
+    if (!currentUser) return;
     setPayingBookingId(booking.id);
     try {
       // 1. Create order on server
@@ -134,6 +136,7 @@ export const CustomerDashboard: React.FC = () => {
   };
 
   const handleCancelBooking = async (bookingId: string) => {
+    if (!currentUser) return;
     const reason = prompt('Please provide reason for cancellation:');
     if (!reason) return;
 
@@ -156,6 +159,7 @@ export const CustomerDashboard: React.FC = () => {
   };
 
   const handleViewReceipt = async (bookingId: string) => {
+    if (!currentUser) return;
     try {
       const res = await apiRequest(`/payments/booking/${bookingId}`, {}, currentUser.id);
       if (res.success) {
@@ -169,7 +173,7 @@ export const CustomerDashboard: React.FC = () => {
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!reviewModalBooking) return;
+    if (!reviewModalBooking || !currentUser) return;
 
     setIsSubmittingReview(true);
     try {
@@ -198,6 +202,10 @@ export const CustomerDashboard: React.FC = () => {
       setIsSubmittingReview(false);
     }
   };
+
+  if (!currentUser) {
+    return null;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">

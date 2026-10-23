@@ -24,6 +24,10 @@ const envSchema = z.object({
   RAZORPAY_WEBHOOK_SECRET: z.string().default('placeholderWebhookSecret'),
   ENABLE_DEMO_PAYMENT_MODE: z.coerce.boolean().default(true),
 
+  // Auth & JWT
+  JWT_SECRET: z.string().default('fixnear-jwt-secret-key-2026-production-secure'),
+  JWT_EXPIRES_IN: z.string().default('7d'),
+
   // AI
   GEMINI_API_KEY: z.string().optional(),
   AI_MODEL: z.string().default('gemini-1.5-flash'),

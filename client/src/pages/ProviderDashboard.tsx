@@ -29,6 +29,7 @@ export const ProviderDashboard: React.FC = () => {
   const [isUpdatingStatus, setIsUpdatingStatus] = useState<string | null>(null);
 
   const fetchDashboard = async () => {
+    if (!currentUser) return;
     try {
       const res = await apiRequest('/providers/me/dashboard', {}, currentUser.id);
       if (res.success) {
@@ -41,9 +42,10 @@ export const ProviderDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchDashboard();
-  }, [currentUser.id]);
+  }, [currentUser?.id]);
 
   const handleUpdateStatus = async (bookingId: string, nextStatus: string) => {
+    if (!currentUser) return;
     setIsUpdatingStatus(bookingId);
     try {
       const res = await apiRequest(
@@ -86,6 +88,8 @@ export const ProviderDashboard: React.FC = () => {
   const incomingRequests: Booking[] = dashboardData?.incoming_requests || [];
   const activeJobs: Booking[] = dashboardData?.active_jobs || [];
   const completedJobs: Booking[] = dashboardData?.completed_jobs || [];
+
+  if (!currentUser) return null;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">

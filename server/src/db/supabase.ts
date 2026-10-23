@@ -30,6 +30,7 @@ export interface Profile {
   full_name: string;
   phone: string;
   role: 'customer' | 'provider' | 'admin';
+  password_hash?: string;
   avatar_url?: string;
   created_at: string;
 }
@@ -211,6 +212,7 @@ class MemoryDatabase {
       full_name: 'Rahul Sharma',
       phone: '+91 98765 43210',
       role: 'customer',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },
@@ -220,6 +222,7 @@ class MemoryDatabase {
       full_name: 'Priya Patel',
       phone: '+91 98765 43211',
       role: 'customer',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },
@@ -229,6 +232,7 @@ class MemoryDatabase {
       full_name: 'Ramesh Kumar',
       phone: '+91 91234 56789',
       role: 'provider',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },
@@ -238,6 +242,7 @@ class MemoryDatabase {
       full_name: 'Suresh Hegde',
       phone: '+91 91234 56790',
       role: 'provider',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },
@@ -247,6 +252,7 @@ class MemoryDatabase {
       full_name: 'Imran Khan',
       phone: '+91 91234 56791',
       role: 'provider',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },
@@ -256,6 +262,7 @@ class MemoryDatabase {
       full_name: 'Manjunath Swamy',
       phone: '+91 91234 56792',
       role: 'provider',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },
@@ -265,6 +272,7 @@ class MemoryDatabase {
       full_name: 'FixNear Administrator',
       phone: '+91 99999 88888',
       role: 'admin',
+      password_hash: '$2b$10$ar41Yug49rqdCD0DtZ6vm..AroaQC8naE1qXUdYvSXBkA38YzynbG', // Password@123
       avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80',
       created_at: new Date().toISOString(),
     },

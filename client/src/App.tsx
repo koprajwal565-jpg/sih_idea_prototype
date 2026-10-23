@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 // Pages
 import { Home } from './pages/Home';
@@ -14,6 +15,8 @@ import { HowItWorks } from './pages/HowItWorks';
 import { BecomeAPro } from './pages/BecomeAPro';
 import { HelpSupport } from './pages/HelpSupport';
 import { Legal } from './pages/Legal';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 import { CustomerDashboard } from './pages/CustomerDashboard';
 import { ProviderDashboard } from './pages/ProviderDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
@@ -26,7 +29,7 @@ export const App: React.FC = () => {
           <Navbar />
           <main className="flex-1">
             <Routes>
-              {/* Public Routes */}
+              {/* Public Routes (Accessible by everyone) */}
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
@@ -37,11 +40,38 @@ export const App: React.FC = () => {
               <Route path="/help" element={<HelpSupport />} />
               <Route path="/privacy" element={<Legal type="privacy" />} />
               <Route path="/terms" element={<Legal type="terms" />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-              {/* Authenticated Portals */}
-              <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-              <Route path="/provider/dashboard" element={<ProviderDashboard />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              {/* Protected Customer Portal (Customers Only) */}
+              <Route
+                path="/customer/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={['customer']}>
+                    <CustomerDashboard />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Protected Worker / Provider Portal (Workers/Providers Only) */}
+              <Route
+                path="/provider/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={['provider']}>
+                    <ProviderDashboard />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Protected Admin Portal (Administrators Only) */}
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Catch-all */}
               <Route path="*" element={<Navigate to="/" replace />} />

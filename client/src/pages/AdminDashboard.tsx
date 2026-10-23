@@ -27,6 +27,7 @@ export const AdminDashboard: React.FC = () => {
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
 
   const fetchAdminData = async () => {
+    if (!currentUser) return;
     try {
       const [metricsRes, pendingRes, logsRes] = await Promise.all([
         apiRequest<AdminMetrics>('/admin/metrics', {}, currentUser.id),
@@ -44,9 +45,10 @@ export const AdminDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchAdminData();
-  }, [currentUser.id]);
+  }, [currentUser?.id]);
 
   const handleVerify = async (providerId: string, decision: 'approve' | 'reject') => {
+    if (!currentUser) return;
     const notes = prompt(`Enter notes for ${decision}ing this provider:`, decision === 'approve' ? 'All documents verified' : 'Incomplete documentation');
     if (notes === null) return;
 

@@ -112,6 +112,18 @@ npm run dev
 - **API Server**: [http://localhost:5000](http://localhost:5000)
 - **Health Check**: [http://localhost:5000/health](http://localhost:5000/health)
 
+### 🔐 Demo Credentials & RBAC Roles
+
+FixNear comes pre-configured with secure bcrypt-hashed accounts for immediate testing:
+
+| Role | Email | Password | Allowed Access |
+|---|---|---|---|
+| **Customer** | `rahul.sharma@example.com` | `Password@123` | Customer Dashboard (`/customer/dashboard`), Bookings, Addresses, Reviews |
+| **Worker / Pro** | `ramesh.electrician@example.com` | `Password@123` | Provider Dashboard (`/provider/dashboard`), Job Workflow, Earnings Ledger |
+| **Admin** | `admin@fixnear.in` | `Password@123` | Admin Dashboard (`/admin/dashboard`), Verification Queue, Metrics, Audit Logs |
+
+*Note: Public registration allows new Customer and Worker accounts. Admin registration is strictly prohibited and can only be provisioned by authenticated administrators.*
+
 ---
 
 ## 🧪 Testing & Verification

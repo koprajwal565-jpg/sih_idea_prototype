@@ -63,6 +63,11 @@ export const ServiceDetail: React.FC = () => {
     e.preventDefault();
     if (!service) return;
 
+    if (!currentUser) {
+      navigate('/login', { state: { from: { pathname: `/services/${slug}` } } });
+      return;
+    }
+
     if (!problemNotes.trim()) {
       alert('Please briefly describe the problem for the technician.');
       return;

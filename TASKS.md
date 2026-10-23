@@ -21,6 +21,7 @@
 | **Phase 10** | Testing, Security Hardening, & CI Pipeline | ✅ Completed |
 | **Phase 11** | Cloud Deployment Preparation (Docker, Vercel, Render) | ✅ Completed |
 | **Phase 12** | Documentation & User Journey Verification | ✅ Completed |
+| **Phase 13** | Authentication, Password Hashing & Strict RBAC | ✅ Completed |
 
 ---
 
@@ -133,3 +134,30 @@
 - [x] Open-source standard files: `LICENSE` (MIT), `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`
 - [x] GitHub issue and pull request templates
 - [x] Verification of all end-to-end user journeys
+
+### Phase 13: Authentication, Password Hashing & Strict RBAC
+- [x] Password hashing using `bcryptjs` with salt rounds = 10
+- [x] JWT token generation and verification (`jsonwebtoken`) with 7-day expiration
+- [x] Database migration `005_auth_credentials.sql` adding `password_hash` column and hashed seed passwords
+- [x] Dedicated Auth Routes in `server/src/routes/auth.ts`:
+  - `POST /api/v1/auth/register` (Customer & Worker public registration; Admin role strictly forbidden)
+  - `POST /api/v1/auth/login` (Password verification via bcrypt, JWT issuance)
+  - `GET /api/v1/auth/me` (Token-based profile retrieval & session re-hydration)
+  - `POST /api/v1/auth/admin/create-user` (Admin-only provisioning for new Admin or Worker accounts)
+- [x] Server-side authorization middleware (`server/src/middleware/auth.ts`):
+  - Strict 401 Unauthorized for missing or invalid tokens (removed silent fallback)
+  - Strict 403 Forbidden for mismatched user roles (`requireRole`)
+- [x] Client Auth & RBAC State:
+  - Token persistence in `localStorage` (`fixnear_token`, `fixnear_user`)
+  - Auto-attach `Authorization: Bearer <token>` on all API requests
+  - Automatic session restoration on page reload (`/api/v1/auth/me`)
+  - Context helpers: `login()`, `register()`, `logout()`, `switchRole()`
+- [x] Frontend UI & Route Guards:
+  - Accessible, responsive `Login.tsx` and `Register.tsx` pages matching warm-neutral & emerald green theme
+  - Form validation with error states and quick demo 1-click login buttons for testing
+  - `ProtectedRoute.tsx` wrapper for all dashboard routes:
+    - Redirects unauthenticated users to `/login` with `returnUrl`
+    - Redirects unauthorized roles to their respective authorized dashboards
+  - Navbar updated with conditional Sign In / Register vs. Role Badge / Dashboard link / Sign Out
+- [x] Comprehensive API & RBAC Test Suite:
+  - 21 integration tests covering public access, registration, login, role restrictions, direct URL/API protection, and admin account provisioning

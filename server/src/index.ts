@@ -9,6 +9,7 @@ import { authenticate } from './middleware/auth.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 // Route handlers
+import authRouter from './routes/auth.js';
 import servicesRouter from './routes/services.js';
 import bookingsRouter from './routes/bookings.js';
 import paymentsRouter from './routes/payments.js';
@@ -60,6 +61,7 @@ app.get('/health', (req: Request, res: Response) => {
 
 // Mount API v1 routes
 const v1 = express.Router();
+v1.use('/auth', authRouter);
 v1.use('/', servicesRouter);
 v1.use('/bookings', bookingsRouter);
 v1.use('/payments', paymentsRouter);

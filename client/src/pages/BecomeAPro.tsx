@@ -44,6 +44,11 @@ export const BecomeAPro: React.FC = () => {
       return;
     }
 
+    if (!currentUser) {
+      navigate('/login', { state: { from: { pathname: '/become-a-pro' } } });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const res = await apiRequest(

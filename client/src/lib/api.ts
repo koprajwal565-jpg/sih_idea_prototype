@@ -4,9 +4,15 @@ export async function apiRequest<T = any>(
   endpoint: string,
   options: RequestInit = {},
   currentUserId?: string
-): Promise<{ success: boolean; data: T; error?: any; unread_count?: number }> {
+): Promise<{ success: boolean; data: T; error?: any; unread_count?: number; token?: string; user?: any; message?: string }> {
   const headers = new Headers(options.headers || {});
   headers.set('Content-Type', 'application/json');
+
+  // Automatically attach stored JWT token if present
+  const storedToken = localStorage.getItem('fixnear_token');
+  if (storedToken && !headers.has('Authorization')) {
+    headers.set('Authorization', `Bearer ${storedToken}`);
+  }
 
   if (currentUserId) {
     headers.set('x-demo-user-id', currentUserId);

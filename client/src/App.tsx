@@ -22,8 +22,12 @@ import { ProviderDashboard } from './pages/ProviderDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 
 export const App: React.FC = () => {
+  const basename = typeof window !== 'undefined' && window.location.pathname.startsWith('/sih_idea_prototype')
+    ? '/sih_idea_prototype'
+    : '/';
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AuthProvider>
         <div className="flex flex-col min-h-screen">
           <Navbar />

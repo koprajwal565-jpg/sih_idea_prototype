@@ -34,6 +34,8 @@ jobs:
         run: npm ci
 
       - name: Build client
+        env:
+          VITE_BASE_PATH: /sih_idea_prototype/
         run: |
           npm run build --workspace=client
           cp client/dist/index.html client/dist/404.html

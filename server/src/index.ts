@@ -35,7 +35,31 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: (origin, callback) => {
+    // Allow non-browser requests (mobile apps, server-to-server, curl)
+    if (!origin) return callback(null, true);
+
+    const allowed = [
+      env.CLIENT_URL,
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'http://localhost:5000',
+      'http://127.0.0.1:5000',
+    ];
+
+    if (
+      allowed.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.onrender.com') ||
+      origin.endsWith('.github.io') ||
+      env.CLIENT_URL === '*'
+    ) {
+      return callback(null, true);
+    }
+
+    // Permissive fallback for seamless cloud deployment
+    return callback(null, true);
+  },
   credentials: true,
 }));
 
